@@ -1,0 +1,19 @@
+{
+  "name": "webpack-vue-practice",
+  "version": "1.0.0",
+  "description": "Be based on webpack and vue to practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meilulan/webpack-vue-practice.git"
+  },
+  "author": "meilulan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meilulan/webpack-vue-practice/issues"
+  },
+  "homepage": "https://github.com/meilulan/webpack-vue-practice#readme"
+}
