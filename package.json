@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/meilulan/webpack-vue-practice/issues"
   },
-  "homepage": "https://github.com/meilulan/webpack-vue-practice#readme"
+  "homepage": "https://github.com/meilulan/webpack-vue-practice#readme",
+  "dependencies": {
+    "webpack": "^3.12.0"
+  }
 }
