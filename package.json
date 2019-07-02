@@ -16,7 +16,10 @@
     "url": "https://github.com/meilulan/webpack-vue-practice/issues"
   },
   "homepage": "https://github.com/meilulan/webpack-vue-practice#readme",
-  "dependencies": {
-    "webpack": "^3.12.0"
+  "dependencies": {},
+  "devDependencies": {
+    "vue": "^2.6.10",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.5"
   }
 }
