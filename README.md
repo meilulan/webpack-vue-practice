@@ -47,4 +47,5 @@ module.exports = {
 ```
 ### 7. 在项目更目录下新建“src"文件夹，并在/src下新建“main.js”入口文件
 到目前为止，项目目录的整体结构如下：
+
 ![webpack-vue-practice01](https://github.com/meilulan/webpack-vue-practice/blob/master/static/img/webpack-vue-practice01.png)
