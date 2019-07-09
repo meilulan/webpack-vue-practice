@@ -280,3 +280,167 @@ body {
 }
 ```
 启动后，可以看到浏览器中的文字颜色已改变，说明scss文件已经起作用了
+
+## 使用babel转码
+> 有些浏览器不是很支持ES6的语法，我们可以使用babelES6转换为ES5语法。
+### 1. 在项目中安装babel
+```
+npm install --save-dev babel-loader @babel/core @babel/preset-env
+```
+
+### 2. 在webpack.config.js的module中配置babel
+```
+//babel
+{
+    test: /\.js$/,
+    loader: 'babel-loader',
+    exclude: /node_modules/
+}
+```
+exclude：是指不需要使用的文件或目录，相对应的是include（手动指定哪些文件或目录）
+
+webpack.config.js整体配置如下：
+```
+const path = require('path');
+const webpack = require('webpack');
+
+module.exports = {
+    entry: './src/main.js',//项目的入口文件
+    output: {
+        path: path.resolve(__dirname, './dist'),//项目的打包文件目录
+        publicPath: '/dist/',//通过devServer访问路径
+        filename: 'build.js'//打包后的文件名
+    },
+    //处理项目中不同类型的模块
+    module: {
+        rules: [
+            //css
+            {
+                test: /\.css$/,
+                use: [
+                    "vue-style-loader",
+                    "css-loader"
+                ]
+            },
+            //scss为扩展名的sass
+            {
+                test: /\.scss$/,
+                use: [
+                    "vue-style-loader",
+                    "css-loader",
+                    "sass-loader"
+                ]
+            },
+            //sass为扩展名的sass
+            {
+                test: /\.sass$/,
+                use: [
+                    "vue-style-loader",
+                    "css-loader",
+                    "sass-loader"
+                ]
+            },
+            //babel
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
+    devServer: {
+        historyApiFallback: true,//如果找不到界面就返回默认首页index.html
+        overlay: true//可以在浏览器打开的页面显示终端编译时产生的错误
+    },
+    resolve: {//帮组webpack找到bundle中需要引入的模块代码，这些代码包含在每个require/import语句中
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        }
+    }
+}
+```
+
+### 3. 在项目根目录下创建babel的配置文件.babelrc
+.babelrc
+```
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "browsers": [
+                        ">0.25%",
+                        "not op_mini all"
+                    ]
+                }
+            }
+        ]
+    ]
+}
+```
+babel的配置具体见官网https://babeljs.io/docs/en/babel-preset-env
+
+### 4. 引入@babel/plugin-transform-runtime
+因为babel-core只是对新引入的语法进行转换，比如箭头函数、块级作用域等
+但对新引入的对象，例如Promise、Set等这些只能使用babel的插件：@babel/plugin-transform-runtime
+在项目开发环境中引入@babel/plugin-transform-runtime，同时在生产环境引入@babel/runtime
+```
+npm install --save-dev @babel/plugin-transform-runtime
+npm install --save @babel/runtime
+```
+
+在.babelrc配置文件中引入plugin
+```
+"plugins": [
+    [
+        "@babel/plugin-transform-runtime",
+        {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": true,
+            "useESModules": false
+        }
+    ]
+]
+```
+
+.babelrc文件内容整体如下：
+```
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    // The % refers to the global coverage of users from browserslist
+                    "browsers": [
+                        ">0.25%",
+                        "not op_mini all"
+                    ]
+                }
+            }
+        ]
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "absoluteRuntime": false,
+                "corejs": false,
+                "helpers": true,
+                "regenerator": true,
+                "useESModules": false
+            }
+        ]
+    ]
+}
+```
+
+具体操作和解释，请查看npm和babel官网：
+https://www.npmjs.com/package/babel-loader
+https://babeljs.io/docs/en/babel-plugin-transform-runtime
+
