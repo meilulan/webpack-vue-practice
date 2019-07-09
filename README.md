@@ -378,3 +378,118 @@ index.html
 </div>
 ```
 运行项目就能看到该图片了。
+
+## 引入vue的单文件组件
+在前面，我们使用了Vue.component来定义全局的组件
+但在实际项目中，更推荐使用单文件组件
+### 1. 安装单文件组件相关的插件
+```
+npm install --save-dev vue-loader vue-template-compiler
+```
+### 2. 在webpack.config.js的module和plugins中引用
+webpack.config.js
+```
+const vueLoaderPlugin = require('vue-loader/lib/plugin');
+
+module:{
+    rules:[
+        //vue单文件组件
+        {
+            test:/\.vue$/,
+            loader:'vue-loader',
+            options:{
+                loaders:{
+                    'scss':[
+                        'vue-style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ],
+                    'sass':[
+                        'vue-style-loader',
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                }
+            }
+        }
+    ]
+},
+plugins:[
+    new vueLoaderPlugin(),
+]
+```
+
+### 3. 在src目录下新建App.vue文件
+App.vue
+```
+<template>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <img src="./img/example.png" />
+        <input type="text" v-model="msg" />
+    </div>
+</template>
+
+<script>
+import say from "./util";
+
+export default {
+    name: "app",
+    data() {
+        return {
+            msg: "the first vue page"
+        };
+    },
+    created() {
+        this.getSay();
+    },
+    methods: {
+        async getSay() {
+            let what = await say();
+            this.msg = what;
+        }
+    }
+};
+</script>
+
+<style lang="scss">
+#app {
+    h1 {
+        color: red;
+    }
+}
+</style>
+```
+
+### 4. 修改main.js文件
+main.js
+```
+import Vue from 'vue';
+import App from './App.vue'
+import './assets/common.scss';
+
+const vue = new Vue({
+    el: "#app",
+    components: { App },
+    template: '<App/>'
+});
+```
+
+### 5. 修改index.html文件
+index.html
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基于webpack3.X的vue开发环境</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+</body>
+</html>
+```
+运行项目，即可看到页面能正确显示。

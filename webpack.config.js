@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const vueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: './src/main.js',//项目的入口文件
@@ -11,6 +12,25 @@ module.exports = {
     //处理项目中不同类型的模块
     module: {
         rules: [
+            //vue单文件组件
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    loaders: {
+                        'scss': [
+                            'vue-style-loader',
+                            'css-loader',
+                            'sass-loader'
+                        ],
+                        'sass': [
+                            'vue-style-loader',
+                            'css-loader',
+                            'sass-loader'
+                        ]
+                    }
+                }
+            },
             //css
             {
                 test: /\.css$/,
@@ -50,9 +70,12 @@ module.exports = {
                 options: {
                     name: '[name].[ext]?[hash]'
                 }
-            }
+            },
         ]
     },
+    plugins: [
+        new vueLoaderPlugin(),
+    ],
     devServer: {
         historyApiFallback: true,//如果找不到界面就返回默认首页index.html
         overlay: true//可以在浏览器打开的页面显示终端编译时产生的错误
