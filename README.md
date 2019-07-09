@@ -380,7 +380,7 @@ module.exports = {
     ]
 }
 ```
-babel的配置具体见官网https://babeljs.io/docs/en/babel-preset-env
+babel的配置具体见[babel官网](https://babeljs.io/docs/en/babel-preset-env)
 
 ### 4. 引入@babel/plugin-transform-runtime
 因为babel-core只是对新引入的语法进行转换，比如箭头函数、块级作用域等
@@ -440,7 +440,4 @@ npm install --save @babel/runtime
 }
 ```
 
-具体操作和解释，请查看npm和babel官网：
-https://www.npmjs.com/package/babel-loader
-https://babeljs.io/docs/en/babel-plugin-transform-runtime
-
+具体操作和解释，请查看 [npm](https://www.npmjs.com/package/babel-loader) 和 [babel](https://babeljs.io/docs/en/babel-plugin-transform-runtime) 官网：
