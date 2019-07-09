@@ -80,9 +80,10 @@ module.exports = {
         historyApiFallback: true,//如果找不到界面就返回默认首页index.html
         overlay: true//可以在浏览器打开的页面显示终端编译时产生的错误
     },
-    resolve: {//帮组webpack找到bundle中需要引入的模块代码，这些代码包含在每个require/import语句中
+    resolve: {//帮助webpack找到bundle中需要引入的模块代码，这些代码包含在每个require/import语句中
         alias: {
             'vue$': 'vue/dist/vue.esm.js'
         }
-    }
+    },
+    devtool:'eval-source-map'
 }
