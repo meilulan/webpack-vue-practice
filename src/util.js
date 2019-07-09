@@ -3,9 +3,9 @@ export default function say() {
     return new Promise((resolve, reject) => {
         let result = true;
         if (result) {
-            resolve('ok');
+            resolve('promise ok');
         } else {
-            reject('no no no');
+            reject('promise no no no');
         }
     })
 }
