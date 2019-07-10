@@ -3,6 +3,9 @@
 
 [TOC]
 
+## 总结
+![summary](https://github.com/meilulan/webpack-vue-practice/blob/master/static/img/_summary.png)
+
 ## 项目初始化
 
 ### 1. 安装node.js
